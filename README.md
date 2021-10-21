@@ -50,6 +50,8 @@ ln -s /media/yinchao/dataset/S3DIS ./data/S3DIS/Stanford3dDataset_v1.2_Aligned_V
 
 ### Preprocess the raw dataset
 
+You can use the `s3dis-prepare-sqn.sh` script to prepare the S3DIS dataset with weak labels.
+
 ```
 # prepare the dataset, each room(Note: each area is preprocessed in the CLoserLook3D code) will result in four files(1 file in the original_ply folder for raw_pc.ply, and 3 files in the input_0.040 for sub_pc.py, sub_pc.kdtree, and project_indices file for each raw point), check data_prepare_s3dis.py for details.
 
@@ -78,6 +80,7 @@ The data file structure should look like:
 │       └── weak_label_0.01
 └── ...
 ```
+
 ### Compile custom CUDA tf_ops
 
 Only `tf_ops/3d_interpolation` CUDA ops need to be compiled, which will used for three trilinear interpolation.
@@ -97,15 +100,17 @@ For more details, check [Charles' PointNet2](https://github.com/charlesq34/point
 
 ### Train on S3DIS
 
+You can use `run-s3dis-Sqn.sh` script to training multiple settings. The core part is as follows:
+
 ```
-python -B main_S3DIS.py --gpu 0 --mode train --test_area 5
-python -B main_S3DIS.py --gpu 0 --mode test --test_area 5
+python -B main_S3DIS_sqn.py --gpu 0 --mode train --test_area 5
+python -B main_S3DIS_sqn.py --gpu 0 --mode test --test_area 5
 
 # for cross validation, use the script
 # sh jobs_6_fold_cv_s3dis.sh
 
-# Move all the generated results (*.ply) in /test folder to /data/S3DIS/results, calculate the final mean IoU results:
-python utils/6_fold_cv.py
+# evaluate
+# TODO
 ```
 
 For more details to set up the development environment, check [the official RandLA-Net repo](https://github.com/QingyongHu/RandLA-Net).
