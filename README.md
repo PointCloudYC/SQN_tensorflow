@@ -103,14 +103,13 @@ For more details, check [Charles' PointNet2](https://github.com/charlesq34/point
 You can use `run-s3dis-Sqn.sh` script to training multiple settings. The core part is as follows:
 
 ```
+# train
 python -B main_S3DIS_sqn.py --gpu 0 --mode train --test_area 5
+# test/evaluation
 python -B main_S3DIS_sqn.py --gpu 0 --mode test --test_area 5
 
 # for cross validation, use the script
 # sh jobs_6_fold_cv_s3dis.sh
-
-# evaluate
-# TODO
 ```
 
 For more details to set up the development environment, check [the official RandLA-Net repo](https://github.com/QingyongHu/RandLA-Net).

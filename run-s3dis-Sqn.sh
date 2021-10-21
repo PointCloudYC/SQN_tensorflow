@@ -11,13 +11,14 @@ VAL_BATCH_SIZES=(8)
 num_points=40960
 max_epoch=400
 # WEAK_LABEL_RATIOS=(0.1 0.01 0.001 0.0001)
-WEAK_LABEL_RATIOS=(0.01)
+WEAK_LABEL_RATIOS=(0.001 0.0001)
 # WEAK_LABEL_RATIOS=(0.001)
 
 # TODO: ablation study
 # num_k_query_pts
 # how to concat features
-CONCAT_TYPES=('1234' '123' '234' '12' '1')
+# CONCAT_TYPES=('1234' '123' '234' '12' '1')
+CONCAT_TYPES=('1234')
 
 for mode in "${MODES[@]}"; do
 	for weak_label_ratio in "${WEAK_LABEL_RATIOS[@]}"; do
@@ -31,7 +32,7 @@ for mode in "${MODES[@]}"; do
                               echo "weak_label_ratio: ${weak_label_ratio}"
                               echo "concat_type: ${concat_type}"
 
-                              time python -B main_S3DIS_SQN.py \
+                              time python -B main_S3DIS_Sqn.py \
                               --gpu ${gpu} \
                               --mode ${mode} \
                               --test_area 5 \

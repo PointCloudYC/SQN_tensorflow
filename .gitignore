@@ -157,3 +157,6 @@ results-Sqn/*/snapshots/*
 results_Sqn/Log_*/snapshots/*
 
 train_log_Sqn/*
+
+# bugs
+bugs/*
