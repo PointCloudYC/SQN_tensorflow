@@ -127,3 +127,33 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# data
+data/*
+
+# vscode
+.vscode/settings.json
+
+# outputs of compiled ops
+utils/*/build/*
+utils/cpp_wrappers/cpp_subsampling/build/*
+utils/cpp_wrappers/cpp_subsampling/*.so
+utils/nearest_neighbors/lib/python/*
+utils/nearest_neighbors/knn.cpp
+__pycache__/*
+*/__pycache__/*
+
+# logs
+train_log/*
+log_*.txt
+
+# tf_ops
+tf_ops/*/*.so
+tf_ops/*/__pycache__/*
+tf_ops/*/*.py.bak
+
+# checkpoints
+results-Sqn/*/snapshots/*
+results_Sqn/Log_*/snapshots/*
+
+train_log_Sqn/*
