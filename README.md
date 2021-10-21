@@ -1,6 +1,6 @@
 # SQN_tensorflow
 
-This repo is an TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. For Pytorch implementation, check our **[SQN_pytorch](https://github.com/PointCloudYC/SQN_pytorch)** repo.
+This repo is a TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. For Pytorch implementation, check our **[SQN_pytorch](https://github.com/PointCloudYC/SQN_pytorch)** repo.
 
 **Caution**: currently, this repo  **does not achieve a satisfactory result as the SQN paper reports**. For performance details, check [performance](#performance-on-s3dis) section. 
 
@@ -118,9 +118,9 @@ The experiments are still in progress due to my slow GPU.
 |---------------------------------|------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Official RandLA-Net| 100%| 63.0| Fully supervised method trained with full labels.                                                                                                                                                                      |   |
 | Official SQN| 1/1000| 61.4| This official SQN uses additional techniques to improve the performance, our replicaed SQN currently does not investigate this yet. Official SQN does not provide results of S3DIS under the weak ratio of 1/10 and 1/100 |
-| Our replicated SQN| 1/10| 52.94| Use PosPool (s) as the encoder whose width=36, due to limited GPU usage and active learning is currently not used.                                                                                                                                                |
-| Our replicated SQN| 1/100| 32.96| Use PosPool (s) as the encoder whose width=36, due to limited GPU usage and active learning is currently not used.                                                                                                                                                |
-| Our replicated SQN| 1/1000| --| Use PosPool (s) as the encoder whose width=36, due to limited GPU usage and active learning is currently not used.                                                                                                                                                |
+| Our replicated SQN| 1/10| 52.94| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
+| Our replicated SQN| 1/100| 32.96| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
+| Our replicated SQN| 1/1000| --| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
 
 
 ## Acknowledgements
