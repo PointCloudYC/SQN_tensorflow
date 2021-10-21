@@ -33,9 +33,11 @@ git clone https://github.com/PointCloudYC/SQN_tensorflow && cd SQN_tensorflow
 create a conda environment
 
 ```
-conda create -n randlanet python=3.5
-source activate randlanet
+# DL is the conda env name
+conda create -n DL python=3.5
+source activate DL
 pip install -r helper_requirements.txt
+# compile the sub-sampling and knn op
 sh compile_op.sh
 ```
 
