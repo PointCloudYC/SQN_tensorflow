@@ -1,3 +1,11 @@
+"""
+main entry and S3DIS class for SQN network, reproduced based on the SQN paper, check https://arxiv.org/abs/2104.04891
+codebase: main_S3DIS.py of the official RandLA-Net
+Author: Chao YIN
+Email: cyinac@connect.ust.hk
+Date: Oct. 15, 2021
+"""
+
 import numpy as np
 import time, pickle, argparse, glob, os, random
 from os.path import join

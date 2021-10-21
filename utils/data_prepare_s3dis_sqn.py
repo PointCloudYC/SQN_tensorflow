@@ -1,3 +1,11 @@
+"""
+prepare S3DIS dataset for SQN model, reproduced based on the SQN paper, check https://arxiv.org/abs/2104.04891
+codebase: data_prepare_s3dis.py of the official RandLA-Net
+Author: Chao YIN
+Email: cyinac@connect.ust.hk
+Date: Oct. 15, 2021
+"""
+
 import os, sys, glob, pickle, argparse, random
 from os.path import join, exists, dirname, abspath
 import numpy as np

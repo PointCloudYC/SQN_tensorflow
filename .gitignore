@@ -132,7 +132,7 @@ dmypy.json
 data/*
 
 # vscode
-.vscode/settings.json
+.vscode/*
 
 # outputs of compiled ops
 utils/*/build/*
