@@ -2,6 +2,10 @@
 
 This repo is a TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. For Pytorch implementation, check our **[SQN_pytorch](https://github.com/PointCloudYC/SQN_pytorch)** repo.
 
+Our initial replication roadmap is shown below:
+
+![](imgs/replication-roadmap.jpg)
+
 **Caution**: currently, this repo  **does not achieve a satisfactory result as the SQN paper reports**. For performance details, check [performance](#performance-on-s3dis) section. 
 
 The repo is still under development, with the aim of reaching the level of performance reported in the SQN paper.
@@ -57,7 +61,7 @@ You can use the `s3dis-prepare-sqn.sh` script to prepare the S3DIS dataset with 
 ```
 # prepare the dataset, each room(Note: each area is preprocessed in the CLoserLook3D code) will result in four files(1 file in the original_ply folder for raw_pc.ply, and 3 files in the input_0.040 for sub_pc.py, sub_pc.kdtree, and project_indices file for each raw point), check data_prepare_s3dis.py for details.
 
-python utils/data_prepare_s3dis.py
+python utils/data_prepare_s3dis_sqn.py
 
 # check #rooms in npy format, should be 272 rooms
 find *.npy | wc -l
