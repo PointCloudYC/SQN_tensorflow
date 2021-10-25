@@ -316,7 +316,7 @@ if __name__ == '__main__':
     cfg.weak_label_ratio=FLAGS.weak_label_ratio
 
     # create S3DIS dataset object for weakly semseg using test_area as validation/test set, the rest as training set-yc
-    dataset = S3DIS_SQN(test_area, cfg)
+    dataset = S3DIS_Benchmark(test_area, cfg)
     dataset.init_input_pipeline()
 
     """provide 3 functionality: training, testing and visualization-yc

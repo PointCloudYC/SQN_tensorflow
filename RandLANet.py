@@ -54,7 +54,8 @@ class Network:
             self.inputs['weak_label_masks'] = flat_inputs[4 * num_layers + 4]
 
             self.labels = self.inputs['labels']
-            self.weak_label_masks = self.inputs['weak_label_masks'] # weak label mask for weakly semseg, (B,N)
+            if self.inputs['weak_label_masks']:
+                self.weak_label_masks = self.inputs['weak_label_masks'] # weak label mask for weakly semseg, (B,N)
             self.is_training = tf.placeholder(tf.bool, shape=())
             self.training_step = 1
             self.training_epoch = 0
@@ -93,7 +94,10 @@ class Network:
             valid_labels = tf.gather(reducing_list, valid_labels_init)
 
             # KEY: add the weak mask for computing losses
-            self.loss = self.get_loss(valid_logits, valid_labels, self.class_weights, self.weak_label_masks)
+            if self.weak_label_masks:
+                self.loss = self.get_loss(valid_logits, valid_labels, self.class_weights, self.weak_label_masks)
+            else:
+                self.loss = self.get_loss(valid_logits, valid_labels, self.class_weights)
 
         with tf.variable_scope('optimizer'):
             self.learning_rate = tf.Variable(config.learning_rate, trainable=False, name='learning_rate')
