@@ -89,33 +89,22 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
         with open(proj_save, 'wb') as f:
             pickle.dump([proj_idx, labels], f)
 
-    """
-    USED for weakly semantic segmentation
-    - save raw pc's weak labels
-    - save sub pc's weak labels
-    """        
-    # save raw pc's weak label mask
-    weak_label_ply_file = join(weak_label_folder, save_path.split('/')[-1][:-4] + '_weak_label.ply')
-    if not os.path.exists(weak_label_ply_file):
-        # set weak points by randomly selecting weak_label_ratio*N points and denote them w. a mask
-        num_cloud_points = pc_label.shape[0]
-        weak_label_mask = np.zeros((num_cloud_points, 1), dtype=np.uint8)
-        # BUG FIXED: fixed already; here, should set replace = True, otherwise a bug will be resulted
-        selected_idx = np.random.choice(num_cloud_points, int(num_cloud_points*weak_label_ratio),replace=False)
-        weak_label_mask[selected_idx,:]=1
-        write_ply(weak_label_ply_file, (weak_label_mask,), ['weak_mask'])
-    else:
-        data = read_ply(weak_label_ply_file) # ply format: x,y,z,red,gree,blue,class
-        weak_label_mask = data['weak_mask']
 
-
-    # save sub pc's weak label mask
+    # USED for weakly semantic segmentation, save sub pc's weak labels
+    # KEY: Randomly select a ratio of points to have labels, give them a mask (no need to save weak label mask for raw pc)
     weak_label_sub_file = join(weak_label_folder, save_path.split('/')[-1][:-4] + '_sub_weak_label.ply')
     if not os.path.exists(weak_label_sub_file):
-        # HACK: the grid_sub_sampling is deterministic  if the inputs are the same. So sub_xyz and sub_colors are the same when called 2nd time
-        _, _, weak_label_sub_mask = DP.grid_sub_sampling(xyz, colors, weak_label_mask, sub_grid_size)
+        # set weak points by randomly selecting weak_label_ratio*N points(i.e., the number of sub_pc) and denote them w. a mask
+        num_sub_cloud_points = sub_labels.shape[0]
+        weak_label_sub_mask = np.zeros((num_sub_cloud_points, 1), dtype=np.uint8)
+        # BUG FIXED: fixed already; here, should set replace = True, otherwise a bug will be resulted
+        selected_idx = np.random.choice(num_sub_cloud_points, int(num_sub_cloud_points*weak_label_ratio),replace=False)
+        weak_label_sub_mask[selected_idx,:]=1
         write_ply(weak_label_sub_file, (weak_label_sub_mask,), ['weak_mask'])
 
+    else:
+        data = read_ply(weak_label_sub_file) 
+        weak_label_mask = data['weak_mask']
 
 
 """
@@ -134,7 +123,7 @@ if __name__ == '__main__':
     parser.add_argument("--rng_seed", type=int, default=123, help='manual seed')
     parser.add_argument('--dataset_path', type=str, default='./data/S3DIS/Stanford3dDataset_v1.2_Aligned_Version', help='dataset path')
     parser.add_argument('--sub_grid_size', type=float, default=0.04, help='grid-sampling size')
-    parser.add_argument('--weak_label_ratio', type=float, default=0.01, help='the weakly semantic segmentation ratio')
+    parser.add_argument('--weak_label_ratio', type=float, default=0.001, help='the weakly semantic segmentation ratio')
     parser.add_argument('--out_format', type=str, default='.ply', help='output format, e.g., ply')
     FLAGS = parser.parse_args()
 
