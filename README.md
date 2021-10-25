@@ -4,13 +4,11 @@ This repo is a TensorFlow implementation of **[Semantic Query Network (SQN)](htt
 
 Our initial replication roadmap is shown below:
 
-![](imgs/replication-roadmap.jpg)
+<img src="imgs/replication-roadmap.jpg" alt="roadmap" width="400"/>
 
-**Caution**: currently, this repo  **does not achieve a satisfactory result as the SQN paper reports**. For performance details, check [performance](#performance-on-s3dis) section. 
+Now the repo can achieve similar performance as the paper on S3DIS w/o any additional training strategies, check [performance](#performance-on-s3dis) section. ~~**Caution**: currently, this repo  **does not achieve a satisfactory result as the SQN paper reports**.~~ 
 
-The repo is still under development, with the aim of reaching the level of performance reported in the SQN paper.
-
-Please open an issue, if you have any comments and suggestions for improving the model performance.
+Feel free to open an issue, if having any comments and suggestions.
 
 ## TODOs
 
@@ -45,7 +43,7 @@ pip install -r helper_requirements.txt
 sh compile_op.sh
 ```
 
-### Download S3DIS and make a symlink
+### Download S3DIS (and make a symlink)
 
 You can download the S3DIS dataset from [here](https://goo.gl/forms/4SoGp4KtH1jfRqEj2") (4.8 GB). You only need to download the file named `Stanford3dDataset_v1.2.zip`, unzip and move (or link) it to a folder. (same as the RandLA-Net repo setting.)
 
@@ -54,7 +52,7 @@ You can download the S3DIS dataset from [here](https://goo.gl/forms/4SoGp4KtH1jf
 ln -s /media/yinchao/dataset/S3DIS ./data/S3DIS/Stanford3dDataset_v1.2_Aligned_Version   
 ```
 
-### Preprocess the raw dataset
+### Preprocess S3DIS dataset
 
 You can use the `s3dis-prepare-sqn.sh` script to prepare the S3DIS dataset with weak labels.
 
@@ -128,9 +126,9 @@ The experiments are still in progress due to my slow GPU.
 |---------------------------------|------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Official RandLA-Net| 100%| 63.0| Fully supervised method trained with full labels.                                                                                                                                                                      |   |
 | Official SQN| 1/1000| 61.4| This official SQN uses additional techniques to improve the performance, our replicaed SQN currently does not investigate this yet. Official SQN does not provide results of S3DIS under the weak ratio of 1/10 and 1/100 |
-| Our replicated SQN| 1/10| 52.94| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
-| Our replicated SQN| 1/100| 32.96| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
-| Our replicated SQN| 1/1000| --| Use RandLA-Net as the encoder and active learning is currently not used.                                                                                                                                                |
+| Our replicated SQN| 1/1000|  over 52.0 | w/o re-trained w. pseudo labels stated in the paper appendix
+| Our replicated SQN| 1/10| --| same as above
+| Our replicated SQN| 1/100| --| same as above 
 
 
 ## Acknowledgements
