@@ -248,7 +248,7 @@ class SqnNet:
                        self.accuracy]
 
                 # logits, weak_labels = self.sess.run([self.logits, self.weak_labels], {self.is_training: True})
-                # BUG: OOM issue reporting error OOM when allocating tensor with shape[40960,10240,32] for queired features concatenation step for the semantic query network(~line 450)  
+                # BUG: OOM issue reporting error OOM when allocating tensor with shape[40960,10240,32] for queired features concatenation step for the semantic query network(~line 450)  , 1 batch contains about 400 weakly points  
                 _, _, summary, l_out, probs, labels, _, _, acc = self.sess.run(ops, {self.is_training: True})
                 self.train_writer.add_summary(summary, self.training_step)
                 t_end = time.time()
