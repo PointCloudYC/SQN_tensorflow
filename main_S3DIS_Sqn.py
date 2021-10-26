@@ -295,7 +295,8 @@ if __name__ == '__main__':
     parser.add_argument('--mode', type=str, default='train', help='options: train, test, vis')
     parser.add_argument('--model_path', type=str, default='None', help='pretrained model path')
     parser.add_argument('--sub_grid_size', type=float, default=0.04, help='grid-sampling size')
-    parser.add_argument('--weak_label_ratio', type=float, default=0.001, help='the weakly semantic segmentation ratio')
+    # KEY: weak label ratio is defined as the number of weak points over the raw poinits
+    parser.add_argument('--weak_label_ratio', type=float, default=0.01, help='the weakly semantic segmentation ratio')
     parser.add_argument('--concat_type', type=str, default='1234', help='how to concat point query features, default is 1234 meaning the queried features at stages 1-4 are all concatenated')
     FLAGS = parser.parse_args()
 

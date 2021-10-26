@@ -1,9 +1,17 @@
 """
-prepare S3DIS dataset for SQN model, reproduced based on the SQN paper, check https://arxiv.org/abs/2104.04891
-codebase: data_prepare_s3dis.py of the official RandLA-Net
+prepare S3DIS dataset for SQN model, reproduced based on SQN paper (https://arxiv.org/abs/2104.04891)
 Author: Chao YIN
 Email: cyinac@connect.ust.hk
-Date: Oct. 15, 2021
+
+history: 
+- Oct. 15, 2021, init the file
+- Oct. 26, 2021, **fix a fatal bug which is primarily caused by misinterpretation of weak label ration.**
+codebase: data_prepare_s3dis.py of the official RandLA-Net
+
+difference from the codebase (data_prepare_s3dis.py of Official RandLA-Net) 
+- add CLI arguments (e.g., sub_grid_size, weak_label_ratio) support with argparse
+- generate separate weak labels for each room in S3DIS
+- refactor the code; if the raw/sub-pc/kdtree/projected indices/weak_labels files exist, then read them into memory. 
 """
 
 import os, sys, glob, pickle, argparse, random
@@ -30,6 +38,9 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
     :return: None
     """
 
+    num_raw_points = 0 # number of raw points for current room
+    num_sub_points = 0 # number of sub-sampled points for current room
+
     # save raw_cloud
     if not os.path.exists(save_path):
         data_list = []
@@ -48,6 +59,7 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
         pc_label[:, 0:3] -= xyz_min
         # manage data types and save in PLY format--yc
         xyz = pc_label[:, :3].astype(np.float32)
+        num_raw_points = xyz.shape[0]
         colors = pc_label[:, 3:6].astype(np.uint8)
         labels = pc_label[:, 6].astype(np.uint8)
         write_ply(save_path, (xyz, colors, labels), ['x', 'y', 'z', 'red', 'green', 'blue', 'class'])
@@ -55,6 +67,7 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
         # if existed then read this ply file to fill the data/xyz/colors/labels 
         data = read_ply(save_path) # ply format: x,y,z,red,gree,blue,class
         xyz = np.vstack((data['x'], data['y'], data['z'])).T # (N',3), note the transpose symbol
+        num_raw_points = xyz.shape[0]
         colors = np.vstack((data['red'], data['green'], data['blue'])).T # (N',3), note the transpose symbol
         labels = data['class']
         pc_label =  np.concatenate((xyz, colors, np.expand_dims(labels, axis=1)),axis=1) # (N,7)
@@ -65,10 +78,12 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
     if not os.path.exists(sub_ply_file):
         sub_xyz, sub_colors, sub_labels = DP.grid_sub_sampling(xyz, colors, labels, sub_grid_size)
         sub_colors = sub_colors / 255.0
+        num_sub_points = sub_xyz.shape[0]
         write_ply(sub_ply_file, [sub_xyz, sub_colors, sub_labels], ['x', 'y', 'z', 'red', 'green', 'blue', 'class'])
     else:
         data = read_ply(sub_ply_file) # ply format: x,y,z,red,gree,blue,class
         sub_xyz = np.vstack((data['x'], data['y'], data['z'])).T # (N',3), note the transpose symbol
+        num_sub_points = sub_xyz.shape[0]
         sub_colors = np.vstack((data['red'], data['green'], data['blue'])).T # (N',3), note the transpose symbol
         sub_labels = data['class']
 
@@ -91,20 +106,26 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
 
 
     # USED for weakly semantic segmentation, save sub pc's weak labels
-    # KEY: Randomly select a ratio of points to have labels, give them a mask (no need to save weak label mask for raw pc)
+    # KEY: Randomly select some points to own labels, give them a mask (no need to save weak label mask for raw pc)
     weak_label_sub_file = join(weak_label_folder, save_path.split('/')[-1][:-4] + '_sub_weak_label.ply')
     if not os.path.exists(weak_label_sub_file):
-        # set weak points by randomly selecting weak_label_ratio*N points(i.e., the number of sub_pc) and denote them w. a mask
-        num_sub_cloud_points = sub_labels.shape[0]
-        weak_label_sub_mask = np.zeros((num_sub_cloud_points, 1), dtype=np.uint8)
+
+        # compute weak ratio of weak points w.r.t. #sub_pc
+        print(f'Current sub-sampled ratio(#sub_points/#raw_points) is {(num_sub_points/num_raw_points)*100:.2f}%')
+        print(f'Current weak_ratio(#weak_points/#raw_points) is {(weak_label_ratio):.4f}')
+
+        # set weak points by randomly selecting weak_label_ratio*N points(i.e., the number of raw_pc) and denote them w. a mask
+        weak_label_sub_mask = np.zeros((num_sub_points, 1), dtype=np.uint8)
+        
         # BUG FIXED: fixed already; here, should set replace = True, otherwise a bug will be resulted
-        selected_idx = np.random.choice(num_sub_cloud_points, int(num_sub_cloud_points*weak_label_ratio),replace=False)
+        # KEY: weak_label_ratio should be multiplied by number of raw points rather sub-sampled points 
+        selected_idx = np.random.choice(num_sub_points, int(num_raw_points*weak_label_ratio),replace=False)
         weak_label_sub_mask[selected_idx,:]=1
         write_ply(weak_label_sub_file, (weak_label_sub_mask,), ['weak_mask'])
-
     else:
         data = read_ply(weak_label_sub_file) 
         weak_label_mask = data['weak_mask']
+        print(f"The ")
 
 
 """
