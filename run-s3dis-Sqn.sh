@@ -4,15 +4,21 @@ MODES=('train')
 # MODES=('train' 'test')
 gpu=0
 # 4 costs about 8GB GPU, others can be used on grp server GPUs
-BATCH_SIZES=(4) # 16 10 8 6 
+BATCH_SIZES=(3) # 3 just 8GB,  4--> OOM on 1080 GPU
 # VAL_BATCH_SIZES=(20) # 16 10 8 6 
 # 8 works on my nvidia 1080 gpu, others can be tried on grp server GPUs
-VAL_BATCH_SIZES=(8) 
+VAL_BATCH_SIZES=(4) # 6-->system collapse
 num_points=40960
 max_epoch=400
+
+# KEY: weak label ratio is defined as the number of weak points over the raw poinits
+# WEAK_LABEL_RATIOS=(0.001)
 # WEAK_LABEL_RATIOS=(0.1 0.01 0.001 0.0001)
 WEAK_LABEL_RATIOS=(0.001 0.0001)
-# WEAK_LABEL_RATIOS=(0.001)
+# WEAK_LABEL_RATIOS=(0.001 0.01 0.0001)
+# new weak_label_ratio refers to weak points/#raw_pc, has a 15 times relation
+# TODO: normalize the ratios
+# WEAK_LABEL_RATIOS=(0.015 0.15 0.0015) # corresponds to 0.001/0.01/0.0001
 
 # TODO: ablation study
 # num_k_query_pts

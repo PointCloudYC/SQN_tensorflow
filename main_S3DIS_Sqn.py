@@ -1,10 +1,17 @@
 """
 main entry and S3DIS class for SQN network, reproduced based on the SQN paper, check https://arxiv.org/abs/2104.04891
-codebase: main_S3DIS.py of the official RandLA-Net
 Author: Chao YIN
 Email: cyinac@connect.ust.hk
-Date: Oct. 15, 2021
+
+history: 
+- Oct. 15, 2021, create the file
+
+difference from the codebase (main_S3DIS.py of Official RandLA-Net) 
+- add CLI arguments (e.g., sub_grid_size, weak_label_ratio) support with argparse to allow more flexible hyper-tuning using bash scripts
+- create S3DIS_SQN class
+- adjust the rest code accordingly
 """
+
 import numpy as np
 import time, pickle, argparse, glob, os, random
 from os.path import join
@@ -286,17 +293,18 @@ class S3DIS_SQN:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--rng_seed", type=int, default=123, help='manual seed')
-    parser.add_argument("--num_points", type=int, default=40960, help='the number of points for each PC example')
-    parser.add_argument("--batch_size", type=int, default=4, help='batch size for training')
-    parser.add_argument("--val_batch_size", type=int, default=1, help='batch size for validation')
-    parser.add_argument("--max_epoch", type=int, default=400, help='max epoch for training')
+    parser.add_argument("--batch_size", type=int, default=3, help='batch size for training')
+    parser.add_argument("--val_batch_size", type=int, default=4, help='batch size for validation')
     parser.add_argument('--gpu', type=int, default=0, help='the number of GPUs to use [default: 0]')
+    parser.add_argument("--num_points", type=int, default=40960, help='the number of points for each PC example')
+    parser.add_argument('--sub_grid_size', type=float, default=0.04, help='grid-sampling size')
+    parser.add_argument("--max_epoch", type=int, default=400, help='max epoch for training')
     parser.add_argument('--test_area', type=int, default=5, help='Which area to use for test, option: 1-6 [default: 5]')
     parser.add_argument('--mode', type=str, default='train', help='options: train, test, vis')
     parser.add_argument('--model_path', type=str, default='None', help='pretrained model path')
-    parser.add_argument('--sub_grid_size', type=float, default=0.04, help='grid-sampling size')
+
     # KEY: weak label ratio is defined as the number of weak points over the raw poinits
-    parser.add_argument('--weak_label_ratio', type=float, default=0.01, help='the weakly semantic segmentation ratio')
+    parser.add_argument('--weak_label_ratio', type=float, default=0.001, help='the weakly semantic segmentation ratio')
     parser.add_argument('--concat_type', type=str, default='1234', help='how to concat point query features, default is 1234 meaning the queried features at stages 1-4 are all concatenated')
     FLAGS = parser.parse_args()
 

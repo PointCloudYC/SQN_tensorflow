@@ -100,9 +100,10 @@ class ConfigS3DIS_Sqn:
     num_classes = 13  # Number of valid classes
     sub_grid_size = 0.04  # preprocess_parameter
 
-    batch_size = 4  # 2, batch_size during training
+    # NOTE: for a Nvidia 1080 GPU (8GB memory), use batch_size=3 costing about 7.9 GB GPU memory.
+    batch_size = 3  # batch_size during training, change to a large number if owning sufficient GPU memory
     # val_batch_size = 20  # batch_size during validation and test for the RandLA-Net
-    val_batch_size = 1 # change to a very sm number, 1 or 2, as the SQN need lg memory for three_nearest_interpolation()
+    val_batch_size = 4 # change to a very sm number, 1 or 2, as the SQN need lg memory for three_nearest_interpolation()
     train_steps = 500  # Number of steps per epochs
     val_steps = 100  # Number of validation steps per epoch
 

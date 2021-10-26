@@ -2,7 +2,15 @@
 SQN network, reproduced based on the SQN paper, check https://arxiv.org/abs/2104.04891
 Author: Chao YIN
 Email: cyinac@connect.ust.hk
-Date: Oct. 15, 2021
+
+history: 
+- Oct. 15, 2021, create the file
+
+difference from the codebase (RandLANet.py of Official RandLA-Net) 
+- add weak_labels relevant attributes
+- delete the decoder part in its inference() and add query network
+- add three_nearest_interpolation() based on tf_ops from official PointNet2 for the query network
+- adjust the losses, modify the training() and evaluate() function correspondingly
 """
 
 import sys
@@ -124,7 +132,8 @@ class SqnNet:
         c_proto.gpu_options.allow_growth = True
         self.sess = tf.Session(config=c_proto)
         self.merged = tf.summary.merge_all()
-        self.train_writer = tf.summary.FileWriter(config.train_sum_dir, self.sess.graph)
+        # self.train_writer = tf.summary.FileWriter(config.train_sum_dir, self.sess.graph)
+        self.train_writer = tf.summary.FileWriter(self.saving_path, self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
 
     def inference(self, inputs, is_training):
