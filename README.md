@@ -1,28 +1,13 @@
 # SQN_tensorflow
 
-This repo is a TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. For Pytorch implementation, check our **[SQN_pytorch](https://github.com/PointCloudYC/SQN_pytorch)** repo.
+This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as reported in the paper  w/o any additional training strategies(e.g., re-training w. pseudo labels), **check [performance](#performance-on-s3dis) section** for details.
 
-Our initial replication roadmap is shown below:
-
-<img src="imgs/replication-roadmap.jpg" alt="roadmap" width="400"/>
-
-Now the repo can achieve similar performance as the paper on S3DIS w/o any additional training strategies, check [performance](#performance-on-s3dis) section. ~~**Caution**: currently, this repo  **does not achieve a satisfactory result as the SQN paper reports**.~~ 
-
-Feel free to open an issue, if having any comments and suggestions.
-
-## TODOs
-
-- implement the training strategy mentioned in the Appendix of the paper.
-- ablation study
-- benchmark weak supervision
-
-## How to run 
+## Requirements
 
 The latest codes are tested on two Ubuntu settings:
 
 - Ubuntu 18.04, Nvidia 1080, CUDA 10.1, TensorFlow 1.13 and Python 3.6
 - Ubuntu 18.04, Nvidia 3090, CUDA 11.3, TensorFlow 1.13 and Python 3.6
-
 
 ### Clone the repository
 
@@ -42,6 +27,8 @@ pip install -r helper_requirements.txt
 # compile the sub-sampling and knn op
 sh compile_op.sh
 ```
+
+For more details to set up the development environment, check [the official RandLA-Net repo](https://github.com/QingyongHu/RandLA-Net).
 
 ### Download S3DIS (and make a symlink)
 
@@ -102,45 +89,85 @@ g++ -std=c++11 tf_interpolate.cpp -o tf_interpolate_so.so -shared -fPIC -I ${TF_
 
 For more details, check [Charles' PointNet2](https://github.com/charlesq34/pointnet2)
 
-### Train on S3DIS
+## Training
 
-You can use `run-s3dis-Sqn.sh` script to training multiple settings. The core part is as follows:
+To train the SQN, run this command:
 
 ```
-# train
-python -B main_S3DIS_sqn.py --gpu 0 --mode train --test_area 5
-# test/evaluation
-python -B main_S3DIS_sqn.py --gpu 0 --mode test --test_area 5
-
-# for cross validation, use the script
-# sh jobs_6_fold_cv_s3dis.sh
+python -B main_S3DIS_Sqn.py --gpu 0 --mode train --test_area 5
 ```
 
-For more details to set up the development environment, check [the official RandLA-Net repo](https://github.com/QingyongHu/RandLA-Net).
+>For more arguments, see `main_S3DIS_Sqn.py` or use `python main_S3DIS_Sqn.py --help` to see documentation.
 
-## Performance on S3DIS
+P.S.: you can use `run-s3dis-Sqn.sh` bash script to train multiple settings or do ablation study.
 
-The experiments are still in progress due to my slow GPU.
+## Evaluation
 
-| Model                           | Weak ratio | Performance (mIoU, %) | Description                                                                                                                                                                                                            |
-|---------------------------------|------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Official RandLA-Net| 100%| 63.0| Fully supervised method trained with full labels.                                                                                                                                                                      |   |
-| Official SQN| 1/1000| 61.4| This official SQN uses additional techniques to improve the performance, our replicaed SQN currently does not investigate this yet. Official SQN does not provide results of S3DIS under the weak ratio of 1/10 and 1/100 |
-| Our replicated SQN| 1/1000|  over 52.0 | w/o re-trained w. pseudo labels stated in the paper appendix
-| Our replicated SQN| 1/10| --| same as above
-| Our replicated SQN| 1/100| --| same as above 
+To evaluate our model on S3DIS, run:
 
+```
+python -B main_S3DIS_Sqn.py --gpu 0 --mode test --test_area 5
+```
+
+>For more arguments, see `main_S3DIS_Sqn.py` or use `python main_S3DIS_Sqn.py --help` to see documentation.
+
+## Pre-trained Models
+
+TODO:
+You can download pre-trained models here:
+
+- [SQN(this repo) w. weak ratio 10%](xxx);
+- [SQN(this repo) w. weak ratio 1%](xxx);
+- [SQN(this repo) w. weak ratio 0.1%](xxx);
+- [SQN(this repo) w. weak ratio 0.01%](xxx);
+- [SQN(this repo) w. weak ratio 0.0067%](xxx);
+
+## Results
+
+Our SQN achieves the following performance on S3DIS:
+>Those numbers surpassing the official SQN is highlighted in bold in the table.
+
+| Model | Weak ratio | Performance (mIoU, %) | Description|
+|-------|------------|-----------------------|------------|
+| SQN(Official)|100%| 63.73| trained with full labels|
+| SQN(Official)|10%| 64.67| trained with full labels|
+| SQN(Official)|1%| 63.65| trained with full labels|
+| SQN(Official)|0.1%| 61.41| trained with full labels + **retrain w. pseudo labels**|
+| SQN(Official)|0.01%| 45.30| trained with full labels + **retrain w. pseudo labels**|
+| SQN(this repo)|10%| -| no retraining w. pseudo labels|
+| SQN(this repo)|1%| -| no retraining w. pseudo labels|
+| SQN(this repo)|0.1%| -| no retraining w. pseudo labels|
+| SQN(this repo)|0.01%| -| no retraining w. pseudo labels|
+| SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
+
+Note: experiments are still in progress due to my slow GPU. Stay in tuned.
 
 ## Acknowledgements
 
-Our pytorch codes borrowed a lot from [RandLA-Net](https://github.com/QingyongHu/RandLA-Net) and the custom trilinear interoplation CUDA ops are modified from [Charles Qi's Pointnet2](https://github.com/charlesq34/pointnet2).
+Our pytorch codes borrowed a lot from [official RandLA-Net](https://github.com/QingyongHu/RandLA-Net) and the custom trilinear interoplation CUDA ops are modified from [official Pointnet2](https://github.com/charlesq34/pointnet2).
+
+## TODOs
+
+- implement the training strategy mentioned in the Appendix of the paper.
+- ablation study
+- benchmark weak supervision
+
+Our initial replication follows the below roadmap:
+
+- dataset preparation
+- SQN architecture consisting of encoder and query network
+- training an evaluation loop
+
+<img src="imgs/replication-roadmap.jpg" alt="roadmap" width="400"/>
+
+
 
 ## Citation
 
 If you find our work useful in your research, please consider citing:
 
 ```
-@article{pytorchpointnet++,
+@code{pytorchpointnet++,
     Author = {YIN, Chao},
     Title = {SQN TensorFlow implementation},
     Journal = {https://github.com/PointCloudYC/SQN_tensorflow},
