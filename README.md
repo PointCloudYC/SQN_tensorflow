@@ -127,7 +127,7 @@ You can download pre-trained models here:
 Our SQN achieves the following performance on S3DIS:
 >Those numbers surpassing the official SQN is highlighted in bold in the table.
 
-| Model | Weak ratio | Performance (mIoU, %) | Description|
+| Model | Weak ratio | mIoU(%) | Description|
 |-------|------------|-----------------------|------------|
 | SQN(Official)|100%| 63.73| trained with full labels|
 | SQN(Official)|10%| 64.67| trained with full labels|
@@ -136,7 +136,7 @@ Our SQN achieves the following performance on S3DIS:
 | SQN(Official)|0.01%| 45.30| trained with full labels + **retrain w. pseudo labels**|
 | SQN(this repo)|10%| -| no retraining w. pseudo labels|
 | SQN(this repo)|1%| -| no retraining w. pseudo labels|
-| SQN(this repo)|0.1%| -| no retraining w. pseudo labels|
+| SQN(this repo)|0.1%| 48.20@10 epochs still running | no retraining w. pseudo labels|
 | SQN(this repo)|0.01%| -| no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 
