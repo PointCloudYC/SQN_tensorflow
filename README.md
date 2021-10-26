@@ -1,6 +1,6 @@
 # SQN_tensorflow
 
-This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as reported in the paper  w/o any additional training strategies(e.g., re-training w. pseudo labels), **check [performance](#performance-on-s3dis) section** for details.
+This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as reported in the paper  w/o any additional training strategies(e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
 ## Requirements
 
