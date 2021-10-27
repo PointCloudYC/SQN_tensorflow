@@ -2,7 +2,7 @@
 
 This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
->This repo achieves a better performance (46.81% mIoU) on S3DIS w. only **0.0067%** labels than the SQN paper, which obtains 45.30% mIoU w. 0.01% labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA) for details. 
+>This repo achieves a better performance (47.56% mIoU) on S3DIS w. only **0.01%** weak labels than the SQN paper, which obtains 45.30% mIoU w. 0.01% labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=TQbCJ3) for details.
 
 ## Requirements
 
@@ -46,7 +46,7 @@ ln -s /media/yinchao/dataset/S3DIS ./data/S3DIS/Stanford3dDataset_v1.2_Aligned_V
 You can use the `s3dis-prepare-sqn.sh` script to prepare the S3DIS dataset with weak labels.
 
 ```
-# prepare the dataset, each room(Note: each area is preprocessed in the CLoserLook3D code) will result in four files(1 file in the original_ply folder for raw_pc.ply, and 3 files in the input_0.040 for sub_pc.py, sub_pc.kdtree, and project_indices file for each raw point), check data_prepare_s3dis.py for details.
+# prepare the dataset, each room (Note: each area is preprocessed in the CLoserLook3D code) will result in four files 1 file in the original_ply folder for raw_pc.ply, and 3 files in the input_0.040 for sub_pc.py, sub_pc.kdtree, and project_indices file for each raw point, check data_prepare_s3dis_sqn.py for details.
 
 python utils/data_prepare_s3dis_sqn.py
 
@@ -129,13 +129,13 @@ Our SQN achieves the following performance on S3DIS:
 |-------|------------|-----------------------|------------|
 | SQN(Official)|100%| 63.73| trained with full labels|
 | SQN(Official)|10%| 64.67| Note: add **retrain w. pseudo labels**|
+| SQN(this repo)|10%| in progress| no retraining w. pseudo labels|
 | SQN(Official)|1%| 63.65| Note: add **retrain w. pseudo labels**|
+| SQN(this repo)|1%|in progress| no retraining w. pseudo labels|
 | SQN(Official)|0.1%| 61.41| Note: add **retrain w. pseudo labels**|
-| SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
-| SQN(this repo)|10%| -| no retraining w. pseudo labels|
-| SQN(this repo)|1%| -| no retraining w. pseudo labels|
 | SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
-| SQN(this repo)|0.01%| 43.16@10 epoch, still in progress| no retraining w. pseudo labels|
+| SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
+| SQN(this repo)|0.01%| **47.56** | no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 
 Note: experiments are still in progress due to my slow GPU. Stay in tuned.
@@ -149,7 +149,7 @@ You can download pre-trained models and training log here:
 - [weak ratio 10% (todo)](TODO)
 - [weak ratio 1% (todo)](TODO)
 - [weak ratio 0.1%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EoS3AYSkrxZLovTfRvyV6xABGsDtOZxiu6bgBcAe0-S-dw?e=7JcwSr)
-- [weak ratio 0.01% (todo)]()
+- [weak ratio 0.01% ](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=TQbCJ3)
 - [weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
 
 
@@ -191,7 +191,7 @@ Our pytorch codes borrowed a lot from [official RandLA-Net](https://github.com/Q
 If you find our work useful in your research, please consider citing:
 
 ```
-@code{pytorchpointnet++,
+@code{SQN_tensorflow_yc,
     Author = {YIN, Chao},
     Title = {SQN TensorFlow implementation},
     Journal = {https://github.com/PointCloudYC/SQN_tensorflow},
