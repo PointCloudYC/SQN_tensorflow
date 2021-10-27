@@ -138,11 +138,11 @@ Note: experiments are still in progress due to my slow GPU. Stay in tuned.
 
 You can download pre-trained models and training log here:
 
-- [SQN(this repo) w. weak ratio 10% (todo)](TODO)
-- [SQN(this repo) w. weak ratio 1% (todo)](TODO)
-- [SQN(this repo) w. weak ratio 0.1%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=D16dnC)
-- [SQN(this repo) w. weak ratio 0.01% (todo)](TODO)
-- [SQN(this repo) w. weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
+- [weak ratio 10% (todo)](TODO)
+- [weak ratio 1% (todo)](TODO)
+- [weak ratio 0.1%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EoS3AYSkrxZLovTfRvyV6xABGsDtOZxiu6bgBcAe0-S-dw?e=7JcwSr)
+- [weak ratio 0.01% (todo)]()
+- [weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
 
 ## Acknowledgements
 
