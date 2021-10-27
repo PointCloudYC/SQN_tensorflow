@@ -1,6 +1,8 @@
 # SQN_tensorflow
 
-This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as reported in the paper  w/o any additional training strategies(e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
+This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
+
+>This repo achieves a better performance (46.81% mIoU) on S3DIS w. only **0.0067%** labels than the SQN paper, which obtains 45.30% mIoU w. 0.01% labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA) for details. 
 
 ## Requirements
 
@@ -144,6 +146,10 @@ You can download pre-trained models and training log here:
 - [weak ratio 0.01% (todo)]()
 - [weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
 
+Each check point folder has the following files:
+
+<img src="imgs/checkpoint_log.jpg" alt="checkpoint folder" width="300"/>
+
 ## Acknowledgements
 
 Our pytorch codes borrowed a lot from [official RandLA-Net](https://github.com/QingyongHu/RandLA-Net) and the custom trilinear interoplation CUDA ops are modified from [official Pointnet2](https://github.com/charlesq34/pointnet2).
@@ -160,7 +166,7 @@ Our initial replication follows the below roadmap:
 - SQN architecture consisting of encoder and query network
 - training an evaluation loop
 
-<img src="imgs/replication-roadmap.jpg" alt="roadmap" width="400"/>
+<img src="imgs/replication-roadmap.jpg" alt="roadmap" width="500"/>
 
 
 
