@@ -8,8 +8,8 @@ This repo is an unofficial TensorFlow implementation of **[Semantic Query Networ
 
 The latest codes are tested on two Ubuntu settings:
 
-- Ubuntu 18.04, Nvidia 1080, CUDA 10.1, TensorFlow 1.13 and Python 3.6
-- Ubuntu 18.04, Nvidia 3090, CUDA 11.3, TensorFlow 1.13 and Python 3.6
+- [x] Ubuntu 18.04, Nvidia 1080, CUDA 10.1, TensorFlow 1.13 and Python 3.6
+- [ ] Ubuntu 18.04, Nvidia 3090, CUDA 11.3, TensorFlow 1.13 and Python 3.6
 
 ### Clone the repository
 
@@ -96,7 +96,10 @@ For more details, check [Charles' PointNet2](https://github.com/charlesq34/point
 To train the SQN, run this command:
 
 ```
-python -B main_S3DIS_Sqn.py --gpu 0 --mode train --test_area 5
+python main_S3DIS_Sqn.py \
+--gpu 0 \
+--mode train \
+--test_area 5
 ```
 
 >For more arguments, see `main_S3DIS_Sqn.py` or use `python main_S3DIS_Sqn.py --help` to see documentation.
@@ -108,7 +111,10 @@ P.S.: you can use `run-s3dis-Sqn.sh` bash script to train multiple settings or d
 To evaluate our model on S3DIS, run:
 
 ```
-python -B main_S3DIS_Sqn.py --gpu 0 --mode test --test_area 5
+python main_S3DIS_Sqn.py \
+--gpu 0 \
+--mode test \
+--test_area 5
 ```
 
 >For more arguments, see `main_S3DIS_Sqn.py` or use `python main_S3DIS_Sqn.py --help` to see documentation.
@@ -122,14 +128,14 @@ Our SQN achieves the following performance on S3DIS:
 | Model | Weak ratio | mIoU(%) | Description|
 |-------|------------|-----------------------|------------|
 | SQN(Official)|100%| 63.73| trained with full labels|
-| SQN(Official)|10%| 64.67| trained with full labels|
-| SQN(Official)|1%| 63.65| trained with full labels|
-| SQN(Official)|0.1%| 61.41| trained with full labels + **retrain w. pseudo labels**|
-| SQN(Official)|0.01%| 45.30| trained with full labels + **retrain w. pseudo labels**|
+| SQN(Official)|10%| 64.67| Note: add **retrain w. pseudo labels**|
+| SQN(Official)|1%| 63.65| Note: add **retrain w. pseudo labels**|
+| SQN(Official)|0.1%| 61.41| Note: add **retrain w. pseudo labels**|
+| SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
 | SQN(this repo)|10%| -| no retraining w. pseudo labels|
 | SQN(this repo)|1%| -| no retraining w. pseudo labels|
 | SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
-| SQN(this repo)|0.01%| -| no retraining w. pseudo labels|
+| SQN(this repo)|0.01%| 43.16@10 epoch, still in progress| no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 
 Note: experiments are still in progress due to my slow GPU. Stay in tuned.
@@ -146,9 +152,20 @@ You can download pre-trained models and training log here:
 - [weak ratio 0.01% (todo)]()
 - [weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
 
+
 Each check point folder has the following files:
 
 <img src="imgs/checkpoint_log.jpg" alt="checkpoint folder" width="300"/>
+
+Use the below script to run checkpoint model on S3DIS:
+
+```
+python -B main_S3DIS_Sqn.py \
+--gpu 0 \
+--mode test \
+--test_area 5 \
+--model_path [your_checkpoint_path, e.g., /path/xx/snap-27001; no need add the file extension]
+```
 
 ## Acknowledgements
 
@@ -156,15 +173,14 @@ Our pytorch codes borrowed a lot from [official RandLA-Net](https://github.com/Q
 
 ## TODOs
 
-- implement the training strategy mentioned in the Appendix of the paper.
-- ablation study
-- benchmark weak supervision
-
-Our initial replication follows the below roadmap:
-
-- dataset preparation
-- SQN architecture consisting of encoder and query network
-- training an evaluation loop
+- [ ] **re-train w. pseudo labels to further improve performance**
+- [ ] **apply self-supervised learning techniques, e.g., Contrastive Learning**.
+- [ ] implement the training strategy mentioned in the Appendix of the paper.
+- [ ] ablation study
+- [ ] benchmark weak supervision
+- [x] dataset preparation implementation
+- [x] SQN architecture implementation consisting of encoder and query network
+- [x] training an evaluation loop modification
 
 <img src="imgs/replication-roadmap.jpg" alt="roadmap" width="500"/>
 
