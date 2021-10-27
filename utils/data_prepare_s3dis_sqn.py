@@ -116,7 +116,7 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
 
         # set weak points by randomly selecting weak_label_ratio*N points(i.e., the number of raw_pc) and denote them w. a mask
         weak_label_sub_mask = np.zeros((num_sub_points, 1), dtype=np.uint8)
-        
+
         # BUG FIXED: fixed already; here, should set replace = True, otherwise a bug will be resulted
         # KEY: weak_label_ratio should be multiplied by number of raw points rather sub-sampled points 
         selected_idx = np.random.choice(num_sub_points, int(num_raw_points*weak_label_ratio),replace=False)
@@ -125,7 +125,6 @@ def convert_pc2plyandweaklabels(anno_path, save_path, sub_pc_folder,
     else:
         data = read_ply(weak_label_sub_file) 
         weak_label_mask = data['weak_mask']
-        print(f"The ")
 
 
 """

@@ -111,21 +111,11 @@ python -B main_S3DIS_Sqn.py --gpu 0 --mode test --test_area 5
 
 >For more arguments, see `main_S3DIS_Sqn.py` or use `python main_S3DIS_Sqn.py --help` to see documentation.
 
-## Pre-trained Models
-
-TODO:
-You can download pre-trained models here:
-
-- [SQN(this repo) w. weak ratio 10%](xxx);
-- [SQN(this repo) w. weak ratio 1%](xxx);
-- [SQN(this repo) w. weak ratio 0.1%](xxx);
-- [SQN(this repo) w. weak ratio 0.01%](xxx);
-- [SQN(this repo) w. weak ratio 0.0067%](xxx);
 
 ## Results
 
 Our SQN achieves the following performance on S3DIS:
->Those numbers surpassing the official SQN is highlighted in bold in the table.
+>We use Nvidia 1080 GPU to train the replicated SQN with a small batch size; The performance might be improved if a powerful GPU w. larger memory could be used. We will update this performance table with a Nvidia 3090 in the future.
 
 | Model | Weak ratio | mIoU(%) | Description|
 |-------|------------|-----------------------|------------|
@@ -136,11 +126,23 @@ Our SQN achieves the following performance on S3DIS:
 | SQN(Official)|0.01%| 45.30| trained with full labels + **retrain w. pseudo labels**|
 | SQN(this repo)|10%| -| no retraining w. pseudo labels|
 | SQN(this repo)|1%| -| no retraining w. pseudo labels|
-| SQN(this repo)|0.1%| 48.20@10 epochs still running | no retraining w. pseudo labels|
+| SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
 | SQN(this repo)|0.01%| -| no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 
 Note: experiments are still in progress due to my slow GPU. Stay in tuned.
+>Those numbers surpassing the official SQN is highlighted in bold in the table.
+
+
+## Pre-trained Models
+
+You can download pre-trained models and training log here:
+
+- [SQN(this repo) w. weak ratio 10% (todo)](TODO)
+- [SQN(this repo) w. weak ratio 1% (todo)](TODO)
+- [SQN(this repo) w. weak ratio 0.1%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=D16dnC)
+- [SQN(this repo) w. weak ratio 0.01% (todo)](TODO)
+- [SQN(this repo) w. weak ratio 0.0067%](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EsMOq5fqavpOv2ayemdK9boB8-u22eFTcCDWQSPJSN7SbA?e=ivlXAA)
 
 ## Acknowledgements
 
