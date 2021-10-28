@@ -2,7 +2,10 @@
 
 This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
->This repo achieves a better performance (47.56% mIoU) on S3DIS w. only **0.01%** weak labels than the SQN paper, which obtains 45.30% mIoU w. 0.01% labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=TQbCJ3) for details.
+>New update(Oct. 28, 2021):  our repo also outperforms recent SOTA [One Thing One Click](https://arxiv.org/abs/2104.02246) on S3DIS under **0.02%** weak labels, achieving 50.72 mIoU. **check [Results](#results) section** for details.
+
+>Our repo achieves better performance (47.56% mIoU) on S3DIS than the original SQN paper (45.30% mIoU) under w. only **0.01%** weak labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=TQbCJ3) for details.
+
 
 ## Requirements
 
@@ -136,6 +139,8 @@ Our SQN achieves the following performance on S3DIS:
 | SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
 | SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
 | SQN(this repo)|0.01%| **47.56** | no retraining w. pseudo labels|
+| One-Thing-One-Click |0.02%| 50.1| CVPR2021 [paper](https://arxiv.org/abs/2104.02246) |
+| SQN(this repo)|0.02%| **50.72** | no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 
 Note: experiments are still in progress due to my slow GPU. Stay in tuned.
