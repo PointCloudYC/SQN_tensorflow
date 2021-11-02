@@ -346,10 +346,14 @@ class DataProcessing:
     def get_class_weights(dataset_name):
         # pre-calculate the number of points in each category
         num_per_class = []
-        # S3DIS semseg model or Sqn model(weakly semseg)
-        if 'S3DIS' in dataset_name:
-            num_per_class = np.array([3370714, 2856755, 4919229, 318158, 375640, 478001, 974733,
-                                      650464, 791496, 88727, 1284130, 229758, 2272837], dtype=np.int32)
+
+        # the number of points for each sub-sampling category-the RandLA-Net author's
+        # if 'S3DIS' in dataset_name:
+        #     num_per_class = np.array([3370714, 2856755, 4919229, 318158, 375640, 478001, 974733,
+        #                               650464, 791496, 88727, 1284130, 229758, 2272837], dtype=np.int32)
+        # the number of points for each sub-sampling category-yc
+        if 'S3DIS_SQN' in dataset_name:
+            num_per_class = np.array([3440776 , 2924550 , 4983774 , 313721 , 370052 , 465707 , 943685 , 660455 , 773345 , 87439 , 1266527 , 221644 , 2158967], dtype=np.int32)
         elif dataset_name is 'Semantic3D':
             num_per_class = np.array([5181602, 5012952, 6830086, 1311528, 10476365, 946982, 334860, 269353],
                                      dtype=np.int32)

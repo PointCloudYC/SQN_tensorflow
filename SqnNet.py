@@ -109,7 +109,8 @@ class SqnNet:
             self.logits = tf.reshape(self.logits, [-1, config.num_classes]) # (n, num_classes)
             self.weak_labels = tf.reshape(self.weak_labels, [-1]) # (n,)
             # TODO: which to use, WCE, CE or smooth label
-            self.loss = self.get_loss_Sqn(self.logits, self.weak_labels)
+            # self.loss = self.get_loss_Sqn(self.logits, self.weak_labels)
+            self.loss = self.get_loss(self.logits, self.weak_labels, self.class_weights)
 
         with tf.variable_scope('optimizer'):
             self.learning_rate = tf.Variable(config.learning_rate, trainable=False, name='learning_rate')
