@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
     import xlsxwriter
     rows = [
-        ['type'] + gt_class2label.items(),
+        ['type'] + list(gt_class2label.values()),
         ['The number of raw points'] + num_points_each_class_raw.tolist(),
         ['The number of sub points'] + num_points_each_class_sub.tolist(),
         ['The number of weak points'] + num_points_each_class_weak.tolist(),
