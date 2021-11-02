@@ -6,7 +6,14 @@ BASE_DIR = os.path.dirname(__file__)
 sys.path.append(BASE_DIR)
 
 # load custom tf interpolate lib
-interpolate_module=tf.load_op_library(os.path.join(BASE_DIR, 'tf_interpolate_so.so'))
+try:
+    if os.path.exists(os.path.join(BASE_DIR, 'tf_interpolate_so.so')):
+        interpolate_module=tf.load_op_library(os.path.join(BASE_DIR, 'tf_interpolate_so.so'))
+    else:
+        raise NotImplementedError("Your TensorFlow has suffered a problem")
+except:
+    print(f'Attention! your tensorflow version should below 1.14! yours is {tf.__version__}\n')
+    print('can not load tf_interpolate_so custom ops correctly! Check your tensorflow version!') 
 
 def three_nn(xyz_query, xyz_support):
     '''find xyz_query's nearest 3 neighbors of xyz_support
