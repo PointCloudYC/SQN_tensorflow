@@ -137,11 +137,14 @@ Our SQN achieves the following performance on S3DIS:
 | SQN(this repo)|1%|in progress| no retraining w. pseudo labels|
 | SQN(Official)|0.1%| 61.41| Note: add **retrain w. pseudo labels**|
 | SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
-| SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
-| SQN(this repo)|0.01%| **47.56** | no retraining w. pseudo labels|
 | One-Thing-One-Click |0.02%| 50.1| CVPR2021 [paper](https://arxiv.org/abs/2104.02246) |
 | SQN(this repo)|0.02%| **50.72** | no retraining w. pseudo labels|
+| SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
+| SQN(this repo)|0.01%| **47.56** | no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
+| SQN(this repo)|0.005%| **45.27** | no retraining w. pseudo labels|
+| SQN(this repo)|0.002%| **39.54** | no retraining w. pseudo labels|
+| SQN(this repo)|0.001%| **35.65** | no retraining w. pseudo labels|
 
 Note: experiments are still in progress due to my slow GPU. Stay in tuned.
 >Those numbers surpassing the official SQN is highlighted in bold in the table.
