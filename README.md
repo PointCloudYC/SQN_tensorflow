@@ -2,7 +2,7 @@
 
 This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
->New (Nov. 4, 2021): this SQN implementation achieves further performance boost under 0.01% and 0.02% weak settings using imbalanced learning techniques. Under 0.02%, it **achieves 48.98% mIoU, outperforming the official SQN by 3.68%**.
+>New (Nov. 4, 2021): this SQN implementation achieves further performance boost using imbalanced learning techniques. Under 0.01%, it **achieves 48.98% mIoU, outperforming the official SQN by 3.68%.**.
 
 >New update(Oct. 28, 2021):  our repo also outperforms recent SOTA [One Thing One Click](https://arxiv.org/abs/2104.02246) on S3DIS under **0.02%** weak labels, achieving 50.72 mIoU. **check [Results](#results) section** for details.
 
