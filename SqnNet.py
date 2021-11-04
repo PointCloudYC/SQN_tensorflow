@@ -466,10 +466,10 @@ class SqnNet:
             dist_recip = 1.0 / (dist + 1e-8) # (B,N,3)
             norm = tf.reduce_sum(dist_recip, axis=2, keepdims=True) # (B,N,1)
             weight = dist_recip / norm # (B,N,3)
-            interpolated_feats = three_interpolate(features_support, idx, weight) # (B,N,C)
+            features_interpolated = three_interpolate(features_support, idx, weight) # (B,N,C)
         else:
             raise ValueError('make sure the known parameters are valid')
-        return interpolated_feats # (B,N,C)
+        return features_interpolated # (B,N,C)
 
     @staticmethod
     def nearest_interpolation(feature, interp_idx):

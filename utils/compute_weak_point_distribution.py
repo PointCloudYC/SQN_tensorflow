@@ -1,8 +1,9 @@
 """
-compute weak point distribution under different weak settings
+compute S3DIS's point distribution for raw, sub-sampled and weak settings, ending w. generating a xlxs file 
 Author: Chao YIN
 Email: cyinac@connect.ust.hk
 
+base: data_prepare_s3dis_sqn.py
 history: 
 - Nov. 1, 2021, init the file
 """
@@ -10,8 +11,7 @@ history:
 import os, sys, glob, pickle, argparse, random
 from os.path import join, exists, dirname, abspath
 import numpy as np
-import pandas as pd
-from sklearn.neighbors import KDTree
+import xlsxwriter # write info to xlsx file
 
 BASE_DIR = dirname(abspath(__file__))
 ROOT_DIR = dirname(BASE_DIR)
@@ -19,6 +19,7 @@ sys.path.append(BASE_DIR)
 sys.path.append(ROOT_DIR)
 from helper_ply import write_ply, read_ply
 from helper_tool import DataProcessing as DP
+
 
 def compute_num_points(anno_path, save_path, sub_pc_folder, 
                    weak_label_folder, weak_label_ratio, sub_grid_size, 
@@ -137,12 +138,11 @@ if __name__ == '__main__':
         num_points_each_class_sub += num_points_room_sub
         num_points_each_class_weak += num_points_room_weak
 
-    print("finish computing!")
-    print(f"num_points for raw:{num_points_each_class_raw}\n")
-    print(f"num_points for sub:{num_points_each_class_sub}\n")
-    print(f"num_points for weak:{num_points_each_class_weak}")
+    print("finish computing w. success!")
+    # print(f"num_points for raw:{num_points_each_class_raw}\n")
+    # print(f"num_points for sub:{num_points_each_class_sub}\n")
+    # print(f"num_points for weak:{num_points_each_class_weak}")
 
-    import xlsxwriter
     rows = [
         ['type'] + list(gt_class2label.values()),
         ['The number of raw points'] + num_points_each_class_raw.tolist(),
