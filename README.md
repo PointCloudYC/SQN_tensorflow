@@ -2,6 +2,8 @@
 
 This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
+>New (Nov. 4, 2021): this SQN implementation achieves further performance boost under 0.01% and 0.02% weak settings using imbalanced learning techniques. Under 0.02%, it **achieves 48.98% mIoU, outperforming the official SQN by 3.68%**.
+
 >New update(Oct. 28, 2021):  our repo also outperforms recent SOTA [One Thing One Click](https://arxiv.org/abs/2104.02246) on S3DIS under **0.02%** weak labels, achieving 50.72 mIoU. **check [Results](#results) section** for details.
 
 >Our repo achieves better performance (47.56% mIoU) on S3DIS than the original SQN paper (45.30% mIoU) under w. only **0.01%** weak labels. Check its [checkpoint](https://hkustconnect-my.sharepoint.com/:f:/g/personal/cyinac_connect_ust_hk/EvFhPeuZKp5Hq8IR-XpsLJkB9EObsJHHFhOevRTzJ36mXg?e=TQbCJ3) for details.
@@ -136,11 +138,11 @@ Our SQN achieves the following performance on S3DIS:
 | SQN(Official)|1%| 63.65| Note: add **retrain w. pseudo labels**|
 | SQN(this repo)|1%|in progress| no retraining w. pseudo labels|
 | SQN(Official)|0.1%| 61.41| Note: add **retrain w. pseudo labels**|
-| SQN(this repo)|0.1%| 55.10 | no retraining w. pseudo labels|
+| SQN(this repo)|0.1%| 55.25 | no retraining w. pseudo labels|
 | One-Thing-One-Click |0.02%| 50.1| CVPR2021 [paper](https://arxiv.org/abs/2104.02246) |
 | SQN(this repo)|0.02%| **50.72** | no retraining w. pseudo labels|
 | SQN(Official)|0.01%| 45.30| Note: add **retrain w. pseudo labels**|
-| SQN(this repo)|0.01%| **47.56** | no retraining w. pseudo labels|
+| SQN(this repo)|0.01%| **48.98** | no retraining w. pseudo labels|
 | SQN(this repo)|0.0067%| **46.81** | no retraining w. pseudo labels|
 | SQN(this repo)|0.005%| **45.27** | no retraining w. pseudo labels|
 | SQN(this repo)|0.002%| **39.54** | no retraining w. pseudo labels|
