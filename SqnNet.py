@@ -22,7 +22,7 @@ import numpy as np
 import tensorflow as tf
 from sklearn.metrics import confusion_matrix
 
-from helper_tool import DataProcessing as DP
+from helper_tool import DataProcessing as DP, log_out
 import helper_tf_util
 
 # custom tf ops based on PointNet++ (https://github.com/charlesq34/pointnet2)
@@ -30,11 +30,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(BASE_DIR, 'tf_ops/3d_interpolation'))
 from tf_interpolate import three_nn, three_interpolate
 
-
-def log_out(out_str, f_out):
-    f_out.write(out_str + '\n')
-    f_out.flush()
-    print(out_str)
 
 class SqnNet:
     """SQNetwork class based RandLA-Net's encoder and its query network
@@ -93,7 +88,7 @@ class SqnNet:
             self.accuracy = 0
             self.mIou_list = [0]
             self.class_weights = DP.get_class_weights(dataset.name)
-            if self.saving_path:
+            if self.config.saving:
                 # put the training log to the resutls dir
                 self.Log_file = open(os.path.join(self.saving_path,'log_train_' + dataset.name + str(dataset.val_split) + '.txt'), 'a')
             else:
@@ -134,7 +129,8 @@ class SqnNet:
         self.sess = tf.Session(config=c_proto)
         self.merged = tf.summary.merge_all()
         # self.train_writer = tf.summary.FileWriter(config.train_sum_dir, self.sess.graph)
-        self.train_writer = tf.summary.FileWriter(self.saving_path, self.sess.graph)
+        if hasattr(self, 'saving_path'):
+            self.train_writer = tf.summary.FileWriter(self.saving_path, self.sess.graph)
         self.sess.run(tf.global_variables_initializer())
 
     def inference(self, inputs, is_training):
@@ -142,7 +138,6 @@ class SqnNet:
         Args:
             inputs ([type]): a dict containing all kinds of required inputs
             is_training (bool): training or not
-
         Returns:
             tensor: logits for segmentation scores
         """
@@ -302,9 +297,13 @@ class SqnNet:
         self.sess.close()
 
     def evaluate(self, dataset):
-        """For Sqn model, all test points will be used for evaluations
+        """For Sqn model, all test sub-sampled points will be used for evaluations. Note: only test on sub-sampled points rather raw pts.
+        For each validation step:
+            obtain current input's preds w. shape (B,N,13) and gt_labels (B,N) by running session (i.e., calculate logits using trained model)
+            convert preds to hard labels w. shape (B,N)
+            compute confusion_matrix, then compute {gt_class,positive_classes,true_positive_classes} for current input, add to their list
+        use {gt_class,positive_classes,true_positive_classes} for the whole validation set to compute mIoU and save logs 
         """
-
         # Initialise iterator with validation data
         self.sess.run(dataset.val_init_op)
 

@@ -433,3 +433,8 @@ class Plot:
         Y_semins = np.concatenate([pc_xyz[:, 0:3], Y_colors], axis=-1)
         Plot.draw_pc(Y_semins)
         return Y_semins
+
+def log_out(out_str, f_out):
+    f_out.write(out_str + '\n')
+    f_out.flush()
+    print(out_str)
