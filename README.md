@@ -1,5 +1,8 @@
 # SQN_tensorflow
 
+This repo is **not maintained** anymore, please check our latest pytorch implmentation [SQN-pytorch](https://github.com/PointCloudYC/SQN-pytorch) w. detailed results on S3DIS and model checkpoints.
+
+
 This repo is an unofficial TensorFlow implementation of **[Semantic Query Network (SQN)](https://arxiv.org/abs/2104.04891)**. Yet, it **achieves comparable or even better performance on S3DIS** as the SQN paper (w/o any additional training strategies, e.g., re-training w. pseudo labels), **check [Results](#results) section** for details.
 
 >New (Nov. 4, 2021): this SQN implementation achieves further performance boost using imbalanced learning techniques. Under 0.01%, it **achieves 48.98% mIoU, outperforming the official SQN by 3.68%.**.
